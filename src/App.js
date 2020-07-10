@@ -1,26 +1,23 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { HashRouter as Router, Route } from "react-router-dom";
+import DiaryList from "./router/DiaryList";
+import createDiary from "./router/createDiary";
+import Header from "./components/Header";
+import DiaryListMap from "./router/DiaryListMap";
+import Diary from "./router/Diary";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  render() {
+    return (
+      <Router>
+        <Header />
+        <Route exact path="/" component={DiaryList} />
+        <Route path="/diary" component={Diary} />
+        <Route exact path="/createDiary" component={createDiary} />
+        <Route exact path="/diaryListMap" component={DiaryListMap} />
+      </Router>
+    );
+  }
 }
 
 export default App;
