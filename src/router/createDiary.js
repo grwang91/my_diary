@@ -1,6 +1,7 @@
 import React from "react";
-import styled, { ThemeProvider } from "styled-components";
-import { Redirect } from "react-router-dom";
+import styled from "styled-components";
+import { connect } from "react-redux";
+import * as types from "../actions/actionTypes";
 
 const Wrapper = styled.div`
   display: flex;
@@ -33,14 +34,21 @@ class createDiary extends React.Component {
   state = {
     title: "",
     content: "",
+    date: "",
   };
 
   render() {
-    const { history } = this.props;
+    const { history, addDiary } = this.props;
 
     let saveDiary = () => {
-      console.log(this.state);
-      history.push("/");
+      if (this.state.title === "") {
+        alert("제목을 입력하세요");
+      } else if (this.state.content === "") {
+        alert("내용을 입력하세요");
+      } else {
+        addDiary(this.state);
+        history.push(`/`);
+      }
     };
 
     return (
@@ -67,4 +75,16 @@ class createDiary extends React.Component {
   }
 }
 
-export default createDiary;
+function mapDispatchToProps(dispatch) {
+  return {
+    addDiary: (diary) => {
+      diary.date = new Date();
+      dispatch({
+        type: types.ADD_DIARY,
+        data: diary,
+      });
+    },
+  };
+}
+
+export default connect(null, mapDispatchToProps)(createDiary);

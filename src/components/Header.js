@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import styled, { ThemeProvider } from "styled-components";
+import styled from "styled-components";
 
 const Span = styled.span`
   padding: 10px;
