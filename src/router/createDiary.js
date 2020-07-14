@@ -38,7 +38,7 @@ class createDiary extends React.Component {
   };
 
   render() {
-    const { history, addDiary } = this.props;
+    const { history, addDiary, id } = this.props;
 
     let saveDiary = () => {
       if (this.state.title === "") {
@@ -46,7 +46,7 @@ class createDiary extends React.Component {
       } else if (this.state.content === "") {
         alert("내용을 입력하세요");
       } else {
-        addDiary(this.state);
+        addDiary(this.state, id);
         history.push(`/`);
       }
     };
@@ -75,10 +75,15 @@ class createDiary extends React.Component {
   }
 }
 
+function mapStateToProps(state) {
+  return { id: state.articleReducer.diaries.length + 1 };
+}
+
 function mapDispatchToProps(dispatch) {
   return {
-    addDiary: (diary) => {
+    addDiary: (diary, id) => {
       diary.date = new Date();
+      diary.id = id;
       dispatch({
         type: types.ADD_DIARY,
         data: diary,
@@ -87,4 +92,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(null, mapDispatchToProps)(createDiary);
+export default connect(mapStateToProps, mapDispatchToProps)(createDiary);

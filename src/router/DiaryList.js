@@ -1,10 +1,16 @@
 import React from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+import List from "../components/List";
+
+const StyledLink = styled(Link)`
+  color: black;
+  font-size: 16px;
+  text-decoration: none;
+`;
 
 class DiaryList extends React.Component {
-  componentWillMount() {}
-
   render() {
     const getCreatedDate = (date) => {
       const year = date.getFullYear();
@@ -37,15 +43,14 @@ class DiaryList extends React.Component {
 
     return (
       <div className="diaryList">
-        <div>
-          <span>제목&#9;</span>
-          <span>작성일</span>
-        </div>
+        <List id={-1} title="제목" createdTime="작성일" />
         {diaries.map((diary) => (
-          <div>
-            <span>{diary.title}&#9;</span>
-            <span>{getCreatedDate(diary.date)}</span>
-          </div>
+          <List
+            key={diary.id}
+            id={diary.id}
+            title={diary.title}
+            createdTime={getCreatedDate(diary.date)}
+          />
         ))}
       </div>
     );

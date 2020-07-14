@@ -9,26 +9,17 @@ class Diary extends React.Component {
     id: null,
   };
 
-  // componentDidMount() {
-  //   const { diary, history } = this.props;
-  //   if (diary.length === 0) {
-  //     console.log("redirect");
-  //     history.push("/");
-  //   }
-  // }
-
   render() {
-    const { history, diary } = this.props;
-    console.log(diary);
+    const { history, diary, location } = this.props;
 
-    if (diary.length === 0) {
+    if (!location.state) {
       history.push("/");
       return <div></div>;
     } else {
       return (
         <div>
-          <h1>{diary[0].title}</h1>
-          <h2>{diary[0].content}</h2>
+          <h1>{diary[location.state.id - 1].title}</h1>
+          <h2>{diary[location.state.id - 1].content}</h2>
         </div>
       );
     }
@@ -36,7 +27,6 @@ class Diary extends React.Component {
 }
 
 function mapStateToProps(state) {
-  console.log(state);
   return { diary: state.articleReducer.diaries };
 }
 
