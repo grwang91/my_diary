@@ -6,6 +6,10 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
 const Div = styled.div`
+  display: flex;
+  justify-content: center;
+  //align-items: center;
+  flex-direction: column;
   margin: 40px;
 `;
 
@@ -20,7 +24,9 @@ class Diary extends React.Component {
     const { history, diary, location } = this.props;
 
     const getDate = (date) => {
-      return `${date.getFullYear()}년 ${date.getMonth()}월 ${date.getDate()}일`;
+      return `${date.getFullYear()}년 ${
+        date.getMonth() + 1
+      }월 ${date.getDate()}일`;
     };
 
     const getWeather = (weather) => {

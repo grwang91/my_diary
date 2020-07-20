@@ -48,14 +48,15 @@ class createDiary extends React.Component {
       const API_KEY = "0a3907ad9c80678e723b18b374fb6c99";
 
       fetch(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=${API_KEY}&units=metric`
+        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=${API_KEY}&units=metric&lang=kr`
       )
         .then(function (response) {
           return response.json();
         })
         .then(function (json) {
+          console.log(json);
           const temperature = json.main.temp;
-          const sky = json.weather[0].description;
+          const sky = json.weather[0].main;
           weather = {
             temperature,
             sky,
