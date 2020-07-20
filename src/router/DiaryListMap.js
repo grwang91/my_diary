@@ -1,3 +1,5 @@
+//지도 API 연동
+
 import React from "react";
 
 class DiaryListMap extends React.Component {

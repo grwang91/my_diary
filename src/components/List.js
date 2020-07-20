@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const StyledLink = styled(Link)`
-  width: 100%;
+  width: 80%;
   color: black;
   font-size: 16px;
   text-decoration: none;
@@ -14,12 +14,12 @@ const StyledLink = styled(Link)`
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
-  width: 600px;
+  width: 100%;
   height: 40px;
 `;
 
 const StyledSpan = styled.span`
-  width: 100px;
+  width: 20%;
   color: black;
   font-size: 16px;
   text-decoration: none;
@@ -28,7 +28,7 @@ const StyledSpan = styled.span`
 `;
 
 const Title = styled.span`
-  width: 100%;
+  width: 80%;
   color: black;
   font-size: 16px;
   text-decoration: none;

@@ -1,3 +1,7 @@
+//날씨정보 API받아서 추가하기
+//사진 업로드
+//내용 입력창 다듬기
+
 import React from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
@@ -30,12 +34,53 @@ const Button = styled.button`
   margin-top: 20px;
 `;
 
+let weather = {};
+
 class createDiary extends React.Component {
   state = {
     title: "",
     content: "",
     date: "",
   };
+
+  componentDidMount() {
+    let getWeather = (lat, lng) => {
+      const API_KEY = "0a3907ad9c80678e723b18b374fb6c99";
+
+      fetch(
+        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=${API_KEY}&units=metric`
+      )
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (json) {
+          const temperature = json.main.temp;
+          const sky = json.weather[0].description;
+          weather = {
+            temperature,
+            sky,
+          };
+        });
+    };
+
+    let handleGeoError = () => {
+      console.log("getGeoError");
+    };
+
+    let handleGeoSuccess = (position) => {
+      const latitude = position.coords.latitude;
+      const longitude = position.coords.longitude;
+      getWeather(latitude, longitude);
+    };
+
+    let askForCoords = () => {
+      navigator.geolocation.getCurrentPosition(
+        handleGeoSuccess,
+        handleGeoError
+      );
+    };
+    askForCoords();
+  }
 
   render() {
     const { history, addDiary, id } = this.props;
@@ -46,7 +91,8 @@ class createDiary extends React.Component {
       } else if (this.state.content === "") {
         alert("내용을 입력하세요");
       } else {
-        addDiary(this.state, id);
+        //askForCoords();
+        addDiary(this.state, id, weather);
         history.push(`/`);
       }
     };
@@ -81,9 +127,10 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    addDiary: (diary, id) => {
+    addDiary: (diary, id, weather) => {
       diary.date = new Date();
       diary.id = id;
+      diary.weather = weather;
       dispatch({
         type: types.ADD_DIARY,
         data: diary,

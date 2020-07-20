@@ -1,13 +1,16 @@
 import React from "react";
-import styled from "styled-components";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
 import List from "../components/List";
+import styled from "styled-components";
+import { Link } from "react-router-dom";
 
-const StyledLink = styled(Link)`
-  color: black;
-  font-size: 16px;
-  text-decoration: none;
+const Div = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 80%;
+  padding: 0 50px 0 50px;
 `;
 
 class DiaryList extends React.Component {
@@ -42,7 +45,7 @@ class DiaryList extends React.Component {
     const { diaries } = this.props;
 
     return (
-      <div className="diaryList">
+      <Div className="diaryList">
         <List id={-1} title="제목" createdTime="작성일" />
         {diaries.map((diary) => (
           <List
@@ -52,7 +55,7 @@ class DiaryList extends React.Component {
             createdTime={getCreatedDate(diary.date)}
           />
         ))}
-      </div>
+      </Div>
     );
   }
 }

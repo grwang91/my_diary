@@ -13,7 +13,7 @@ const Div = styled.div`
   display: flex;
   justify-content: center;
   padding: 20px;
-  align-items: center;
+  // align-items: center;
 `;
 
 const StyledLink = styled(Link)`
