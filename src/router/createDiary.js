@@ -36,50 +36,49 @@ const Button = styled.button`
 
 let weather = {};
 
+let getWeather = (lat, lng) => {
+  const API_KEY = "0a3907ad9c80678e723b18b374fb6c99";
+
+  fetch(
+    `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=${API_KEY}&units=metric&lang=kr`
+  )
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (json) {
+      console.log(json);
+      const temperature = json.main.temp;
+      const sky = json.weather[0].main;
+      weather = {
+        temperature,
+        sky,
+      };
+    });
+};
+
+let handleGeoError = () => {
+  console.log("getGeoError");
+};
+
+let handleGeoSuccess = (position) => {
+  const latitude = position.coords.latitude;
+  const longitude = position.coords.longitude;
+  getWeather(latitude, longitude);
+};
+
+let askForCoords = () => {
+  navigator.geolocation.getCurrentPosition(handleGeoSuccess, handleGeoError);
+};
+
 class createDiary extends React.Component {
   state = {
     title: "",
     content: "",
     date: "",
+    selectedFile: "",
   };
 
   componentDidMount() {
-    let getWeather = (lat, lng) => {
-      const API_KEY = "0a3907ad9c80678e723b18b374fb6c99";
-
-      fetch(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=${API_KEY}&units=metric&lang=kr`
-      )
-        .then(function (response) {
-          return response.json();
-        })
-        .then(function (json) {
-          console.log(json);
-          const temperature = json.main.temp;
-          const sky = json.weather[0].main;
-          weather = {
-            temperature,
-            sky,
-          };
-        });
-    };
-
-    let handleGeoError = () => {
-      console.log("getGeoError");
-    };
-
-    let handleGeoSuccess = (position) => {
-      const latitude = position.coords.latitude;
-      const longitude = position.coords.longitude;
-      getWeather(latitude, longitude);
-    };
-
-    let askForCoords = () => {
-      navigator.geolocation.getCurrentPosition(
-        handleGeoSuccess,
-        handleGeoError
-      );
-    };
     askForCoords();
   }
 
@@ -115,6 +114,13 @@ class createDiary extends React.Component {
             }}
             value={this.state.content}
           />
+          <Title
+            type="file"
+            name="file"
+            onChange={(e) => {
+              this.setState({ selectedFile: e.target.files[0] });
+            }}
+          ></Title>
           <Button onClick={saveDiary}>완료</Button>
         </Wrapper>
       </>
@@ -132,6 +138,7 @@ function mapDispatchToProps(dispatch) {
       diary.date = new Date();
       diary.id = id;
       diary.weather = weather;
+      console.log(diary);
       dispatch({
         type: types.ADD_DIARY,
         data: diary,
