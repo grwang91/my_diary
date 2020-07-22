@@ -14,6 +14,17 @@ const Div = styled.div`
 `;
 
 class DiaryList extends React.Component {
+  componentDidMount() {
+    fetch("/post/4")
+      .then((response) => {
+        console.log(response);
+        return response.json();
+      })
+      .then((json) => {
+        console.log(json);
+      });
+  }
+
   render() {
     const getCreatedDate = (date) => {
       const year = date.getFullYear();

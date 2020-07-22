@@ -43,6 +43,7 @@ let getWeather = (lat, lng) => {
     `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=${API_KEY}&units=metric&lang=kr`
   )
     .then(function (response) {
+      console.log(response);
       return response.json();
     })
     .then(function (json) {
