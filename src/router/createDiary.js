@@ -4,8 +4,7 @@
 
 import React from "react";
 import styled from "styled-components";
-import { connect } from "react-redux";
-import * as types from "../actions/actionTypes";
+import serverapi from "../api/serverapi";
 
 const Wrapper = styled.div`
   display: flex;
@@ -43,11 +42,9 @@ let getWeather = (lat, lng) => {
     `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=${API_KEY}&units=metric&lang=kr`
   )
     .then(function (response) {
-      console.log(response);
       return response.json();
     })
     .then(function (json) {
-      console.log(json);
       const temperature = json.main.temp;
       const sky = json.weather[0].main;
       weather = {
@@ -75,8 +72,6 @@ class createDiary extends React.Component {
   state = {
     title: "",
     content: "",
-    date: "",
-    selectedFile: "",
   };
 
   componentDidMount() {
@@ -84,7 +79,7 @@ class createDiary extends React.Component {
   }
 
   render() {
-    const { history, addDiary, id } = this.props;
+    const { history } = this.props;
 
     let saveDiary = () => {
       if (this.state.title === "") {
@@ -92,9 +87,17 @@ class createDiary extends React.Component {
       } else if (this.state.content === "") {
         alert("내용을 입력하세요");
       } else {
-        //askForCoords();
-        addDiary(this.state, id, weather);
-        history.push(`/`);
+        var input = document.querySelector('input[type="file"]');
+        var data = new FormData();
+
+        data.append("title", this.state.title);
+        data.append("content", this.state.content);
+        data.append("selectedFile", input.files[0]);
+        data.append("weather", JSON.stringify(weather));
+
+        serverapi.createDiary(data).then(() => {
+          history.push(`/`);
+        });
       }
     };
 
@@ -115,13 +118,7 @@ class createDiary extends React.Component {
             }}
             value={this.state.content}
           />
-          <Title
-            type="file"
-            name="file"
-            onChange={(e) => {
-              this.setState({ selectedFile: e.target.files[0] });
-            }}
-          ></Title>
+          <Title type="file" name="file"></Title>
           <Button onClick={saveDiary}>완료</Button>
         </Wrapper>
       </>
@@ -129,23 +126,4 @@ class createDiary extends React.Component {
   }
 }
 
-function mapStateToProps(state) {
-  return { id: state.articleReducer.diaries.length + 1 };
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    addDiary: (diary, id, weather) => {
-      diary.date = new Date();
-      diary.id = id;
-      diary.weather = weather;
-      console.log(diary);
-      dispatch({
-        type: types.ADD_DIARY,
-        data: diary,
-      });
-    },
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(createDiary);
+export default createDiary;

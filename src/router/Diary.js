@@ -2,7 +2,6 @@
 
 import React from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
 const Div = styled.div`
@@ -14,16 +13,11 @@ const Div = styled.div`
 `;
 
 class Diary extends React.Component {
-  // state = {
-  //   title: "",
-  //   content: "",
-  //   id: null,
-  // };
-
   render() {
-    const { history, diary, location } = this.props;
+    const { history, diaries, location } = this.props;
 
     const getDate = (date) => {
+      date = new Date(date);
       return `${date.getFullYear()}년 ${
         date.getMonth() + 1
       }월 ${date.getDate()}일`;
@@ -37,15 +31,15 @@ class Diary extends React.Component {
       history.push("/");
       return <div></div>;
     } else {
-      let diaryData = diary[location.state.id - 1];
-      //console.log(diary[location.state.id - 1].date);
+      let diary = diaries.find((diary) => diary.id === location.state.id);
+
       return (
         <Div>
           <h2>
-            {getDate(diaryData.date)} {getWeather(diaryData.weather)}
+            {getDate(diary.date)} {getWeather(diary.weather)}
           </h2>
-          <h3>{diaryData.title}</h3>
-          <h4>{diaryData.content}</h4>
+          <h3>{diary.title}</h3>
+          <h4>{diary.content}</h4>
         </Div>
       );
     }
@@ -53,7 +47,7 @@ class Diary extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return { diary: state.articleReducer.diaries };
+  return { diaries: state.articleReducer.diaries };
 }
 
 export default connect(mapStateToProps)(Diary);

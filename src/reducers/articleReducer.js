@@ -7,11 +7,8 @@ let initialState = {
 
 export default function articleReducer(state = initialState, action) {
   switch (action.type) {
-    case types.ADD_DIARY: {
-      const nextState = produce(state, (draft) => {
-        draft.diaries.push(action.data);
-      });
-      return nextState;
+    case types.LOAD_DIARIES_SUCCESS: {
+      return { ...state, diaries: action.data };
     }
 
     default:
