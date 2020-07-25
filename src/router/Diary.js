@@ -3,6 +3,7 @@
 import React from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
+import serverapi from "../api/serverapi";
 
 const Div = styled.div`
   display: flex;
@@ -10,6 +11,10 @@ const Div = styled.div`
   //align-items: center;
   flex-direction: column;
   margin: 40px;
+`;
+
+const Button = styled.button`
+  margin-left: 60px;
 `;
 
 class Diary extends React.Component {
@@ -24,7 +29,14 @@ class Diary extends React.Component {
     };
 
     const getWeather = (weather) => {
-      return `날씨 : ${weather.temperature}도, ${weather.sky}`;
+      return `날씨 : ${parseInt(weather.temperature + 0.5)}도, ${weather.sky}`;
+    };
+
+    const deleteDiary = (id) => {
+      console.log("dd");
+      serverapi.deleteDiary(id).then(() => {
+        history.push("/");
+      });
     };
 
     if (!location.state) {
@@ -37,6 +49,8 @@ class Diary extends React.Component {
         <Div>
           <h2>
             {getDate(diary.date)} {getWeather(diary.weather)}
+            {/* <Button>삭제</Button> */}
+            <Button onClick={deleteDiary(diary.id)}>삭제</Button>
           </h2>
           <h3>{diary.title}</h3>
           <h4>{diary.content}</h4>
