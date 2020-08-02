@@ -1,6 +1,8 @@
+import * as baseurl from "../common/serverurl";
+
 class serverapi {
   static deleteDiary(id) {
-    return fetch(`/get/deleteDiary/${id}`, {
+    return fetch(baseurl.amazonurl + `get/deleteDiary/${id}`, {
       method: "GET",
       headers: {},
     }).then((response) => {
@@ -9,7 +11,7 @@ class serverapi {
   }
 
   static createDiary(data) {
-    return fetch("/post/diary", {
+    return fetch(baseurl.amazonurl + "post/diary", {
       method: "POST",
       headers: {
         Accept: "application/json, application/xml, text/plain, text/html",
@@ -21,7 +23,7 @@ class serverapi {
   }
 
   static getDiaries() {
-    return fetch("/get/diaries", {
+    return fetch(baseurl.amazonurl + "get/diaries", {
       method: "GET",
       headers: {},
     }).then((response) => {

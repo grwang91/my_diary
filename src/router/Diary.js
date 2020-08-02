@@ -20,6 +20,7 @@ const Button = styled.button`
 class Diary extends React.Component {
   render() {
     const { history, diaries, location } = this.props;
+    console.log(this.props);
 
     const getDate = (date) => {
       date = new Date(date);
@@ -49,8 +50,8 @@ class Diary extends React.Component {
         <Div>
           <h2>
             {getDate(diary.date)} {getWeather(diary.weather)}
-            {/* <Button>삭제</Button> */}
-            <Button onClick={deleteDiary(diary.id)}>삭제</Button>
+            <Button> 삭제</Button>
+            {/* <Button onClick={deleteDiary(diary.id)}>삭제</Button> */}
           </h2>
           <h3>{diary.title}</h3>
           <h4>{diary.content}</h4>

@@ -92,10 +92,18 @@ class createDiary extends React.Component {
 
         data.append("title", this.state.title);
         data.append("content", this.state.content);
-        data.append("selectedFile", input.files[0]);
         data.append("weather", JSON.stringify(weather));
 
-        serverapi.createDiary(data).then(() => {
+        if (input.files.length === 0) {
+          data.append("selectedFile", "dd");
+        } else {
+          data.append("selectedFile", input.files[0]);
+        }
+
+        console.log(input.files);
+
+        serverapi.createDiary(data).then((response) => {
+          console.log(response);
           history.push(`/`);
         });
       }
@@ -118,7 +126,7 @@ class createDiary extends React.Component {
             }}
             value={this.state.content}
           />
-          <Title type="file" name="file"></Title>
+          <Title type="file"></Title>
           <Button onClick={saveDiary}>완료</Button>
         </Wrapper>
       </>
