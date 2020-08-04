@@ -100,10 +100,7 @@ class createDiary extends React.Component {
           data.append("selectedFile", input.files[0]);
         }
 
-        console.log(input.files);
-
         serverapi.createDiary(data).then((response) => {
-          console.log(response);
           history.push(`/`);
         });
       }

@@ -1,8 +1,10 @@
-import * as baseurl from "../common/serverurl";
+import { localurl } from "../common/serverurl";
+
+const baseurl = localurl;
 
 class serverapi {
   static deleteDiary(id) {
-    return fetch(baseurl.amazonurl + `get/deleteDiary/${id}`, {
+    return fetch(baseurl + `get/deleteDiary/${id}`, {
       method: "GET",
       headers: {},
     }).then((response) => {
@@ -11,7 +13,7 @@ class serverapi {
   }
 
   static createDiary(data) {
-    return fetch(baseurl.amazonurl + "post/diary", {
+    return fetch(baseurl + "post/diary", {
       method: "POST",
       headers: {
         Accept: "application/json, application/xml, text/plain, text/html",
@@ -23,7 +25,7 @@ class serverapi {
   }
 
   static getDiaries() {
-    return fetch(baseurl.amazonurl + "get/diaries", {
+    return fetch(baseurl + "get/diaries", {
       method: "GET",
       headers: {},
     }).then((response) => {

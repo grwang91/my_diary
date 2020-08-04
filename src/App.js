@@ -12,7 +12,7 @@ class App extends React.Component {
       <Router>
         <Header />
         <Route exact path="/" component={DiaryList} />
-        <Route path="/diary/:id" component={Diary} />
+        <Route exact path="/diary/:id" component={Diary} />
         <Route exact path="/createDiary" component={createDiary} />
         <Route exact path="/diaryListMap" component={DiaryListMap} />
       </Router>

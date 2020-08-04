@@ -18,9 +18,16 @@ const Button = styled.button`
 `;
 
 class Diary extends React.Component {
+  componentDidMount() {
+    const { history, location } = this.props;
+
+    if (location.state === undefined) {
+      history.push("/");
+    }
+  }
+
   render() {
     const { history, diaries, location } = this.props;
-    console.log(this.props);
 
     const getDate = (date) => {
       date = new Date(date);
@@ -34,30 +41,27 @@ class Diary extends React.Component {
     };
 
     const deleteDiary = (id) => {
-      console.log("dd");
       serverapi.deleteDiary(id).then(() => {
         history.push("/");
       });
     };
 
     if (!location.state) {
-      history.push("/");
-      return <div></div>;
-    } else {
-      let diary = diaries.find((diary) => diary.id === location.state.id);
-
-      return (
-        <Div>
-          <h2>
-            {getDate(diary.date)} {getWeather(diary.weather)}
-            <Button> 삭제</Button>
-            {/* <Button onClick={deleteDiary(diary.id)}>삭제</Button> */}
-          </h2>
-          <h3>{diary.title}</h3>
-          <h4>{diary.content}</h4>
-        </Div>
-      );
+      return null;
     }
+
+    let diary = diaries.find((diary) => diary.id === location.state.id);
+
+    return (
+      <Div>
+        <h2>
+          {getDate(diary.date)} {getWeather(diary.weather)}
+          <Button onClick={() => deleteDiary(diary.id)}>삭제</Button>
+        </h2>
+        <h3>{diary.title}</h3>
+        <h4>{diary.content}</h4>
+      </Div>
+    );
   }
 }
 
