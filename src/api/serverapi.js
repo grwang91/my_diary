@@ -1,8 +1,33 @@
 import { localurl } from "../common/serverurl";
+import { amazonurl } from "../common/serverurl";
 
 const baseurl = localurl;
 
 class serverapi {
+  static trySignup(loginID, password) {
+    return fetch(baseurl + "post/signup", {
+      method: "POST",
+      header: {},
+      body: {
+        loginID,
+        password,
+      },
+    });
+  }
+
+  static tryLogin(loginID, password) {
+    return fetch(baseurl + "post/login", {
+      method: "POST",
+      header: {},
+      body: {
+        loginID,
+        password,
+      },
+    }).then((response) => {
+      return response.json();
+    });
+  }
+
   static deleteDiary(id) {
     return fetch(baseurl + `get/deleteDiary/${id}`, {
       method: "GET",
