@@ -7,22 +7,24 @@ class serverapi {
   static trySignup(loginID, password) {
     return fetch(baseurl + "post/signup", {
       method: "POST",
-      header: {},
-      body: {
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({
         loginID,
         password,
-      },
+      }),
+    }).then((response) => {
+      return response.json();
     });
   }
 
   static tryLogin(loginID, password) {
     return fetch(baseurl + "post/login", {
       method: "POST",
-      header: {},
-      body: {
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({
         loginID,
         password,
-      },
+      }),
     }).then((response) => {
       return response.json();
     });
