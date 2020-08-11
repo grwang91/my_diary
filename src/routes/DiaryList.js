@@ -17,7 +17,7 @@ const Div = styled.div`
 class DiaryList extends React.Component {
   componentDidMount() {
     let { tryGetDiariesAndDispatch } = this.props;
-    tryGetDiariesAndDispatch();
+    tryGetDiariesAndDispatch(this.props.authorization);
   }
 
   render() {
@@ -40,12 +40,15 @@ class DiaryList extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return { diaries: state.articleReducer.diaries };
+  return {
+    diaries: state.articleReducer.diaries,
+    authorization: state.loginReducer.authorization,
+  };
 }
 
 let mapDispatchToProps = (dispatch) => ({
-  tryGetDiariesAndDispatch: () => {
-    return tryGetDiariesAndDispatch(dispatch);
+  tryGetDiariesAndDispatch: (authorization) => {
+    return tryGetDiariesAndDispatch(dispatch)(authorization);
   },
 });
 

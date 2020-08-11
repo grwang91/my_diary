@@ -40,8 +40,8 @@ class Diary extends React.Component {
       return `날씨 : ${parseInt(weather.temperature + 0.5)}도, ${weather.sky}`;
     };
 
-    const deleteDiary = (id) => {
-      serverapi.deleteDiary(id).then(() => {
+    const deleteDiary = (authorization, id) => {
+      serverapi.deleteDiary(authorization, id).then(() => {
         history.push("/");
       });
     };
@@ -56,7 +56,11 @@ class Diary extends React.Component {
       <Div>
         <h2>
           {getDate(diary.date)} {getWeather(diary.weather)}
-          <Button onClick={() => deleteDiary(diary.id)}>삭제</Button>
+          <Button
+            onClick={() => deleteDiary(this.props.authorization, diary.id)}
+          >
+            삭제
+          </Button>
         </h2>
         <h3>{diary.title}</h3>
         <h4>{diary.content}</h4>
@@ -66,7 +70,10 @@ class Diary extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return { diaries: state.articleReducer.diaries };
+  return {
+    diaries: state.articleReducer.diaries,
+    authorization: state.loginReducer.authorization,
+  };
 }
 
 export default connect(mapStateToProps)(Diary);

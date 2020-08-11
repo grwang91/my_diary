@@ -25,24 +25,25 @@ class serverapi {
         loginID,
         password,
       }),
-    }).then((response) => {
-      return response.json();
     });
   }
 
-  static deleteDiary(id) {
+  static deleteDiary(authorization, id) {
     return fetch(baseurl + `get/deleteDiary/${id}`, {
       method: "GET",
-      headers: {},
+      headers: {
+        authorization,
+      },
     }).then((response) => {
       return response.json();
     });
   }
 
-  static createDiary(data) {
+  static createDiary(authorization, data) {
     return fetch(baseurl + "post/diary", {
       method: "POST",
       headers: {
+        authorization,
         Accept: "application/json, application/xml, text/plain, text/html",
       },
       body: data,
@@ -51,10 +52,12 @@ class serverapi {
     });
   }
 
-  static getDiaries() {
+  static getDiaries(authorization) {
     return fetch(baseurl + "get/diaries", {
       method: "GET",
-      headers: {},
+      headers: {
+        authorization,
+      },
     }).then((response) => {
       return response.json();
     });

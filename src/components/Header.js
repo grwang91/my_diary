@@ -27,7 +27,7 @@ class Header extends React.Component {
     return (
       <Div className="headerWrapper">
         <Span className="createWrapper">
-          <StyledLink to="/createDiary">새 일기 쓰기</StyledLink>
+          <StyledLink to="/createDiary">새 글</StyledLink>
         </Span>
         <Span className="mapWrapper">
           <StyledLink to="/diaryListMap">지도로 보기</StyledLink>

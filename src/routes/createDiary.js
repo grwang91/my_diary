@@ -5,6 +5,7 @@
 import React from "react";
 import styled from "styled-components";
 import serverapi from "../api/serverapi";
+import { connect } from "react-redux";
 
 const Wrapper = styled.div`
   display: flex;
@@ -100,9 +101,11 @@ class createDiary extends React.Component {
           data.append("selectedFile", input.files[0]);
         }
 
-        serverapi.createDiary(data).then((response) => {
-          history.push(`/`);
-        });
+        serverapi
+          .createDiary(this.props.authorization, data)
+          .then((response) => {
+            history.push(`/`);
+          });
       }
     };
 
@@ -131,4 +134,8 @@ class createDiary extends React.Component {
   }
 }
 
-export default createDiary;
+let mapStateToProps = (state) => ({
+  authorization: state.loginReducer.authorization,
+});
+
+export default connect(mapStateToProps)(createDiary);
