@@ -1,6 +1,13 @@
 import serverapi from "../api/serverapi";
 import * as types from "../actions/actionTypes";
 
+export const tryLogoutAndDispatch = (dispatch) => {
+  console.log("logout");
+  dispatch({
+    type: types.TRY_LOGOUT,
+  });
+};
+
 export const trySignupAndLogin = (dispatch) => (loginID, password) => {
   return serverapi.trySignup(loginID, password).then((response) => {
     if (response.message === "Success") {

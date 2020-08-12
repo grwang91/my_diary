@@ -13,6 +13,11 @@ export default function loginReducer(state = initialState, action) {
       return newState;
     }
 
+    case types.TRY_LOGOUT: {
+      let newState = initialState;
+      return newState;
+    }
+
     default:
       return state;
   }

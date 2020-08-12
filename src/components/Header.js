@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { connect } from "react-redux";
+import { tryLogoutAndDispatch } from "../actions/loadActions";
 
 const Span = styled.span`
   padding: 10px;
@@ -13,7 +15,7 @@ const Div = styled.div`
   display: flex;
   justify-content: center;
   padding: 20px;
-  // align-items: center;
+  align-items: center;
 `;
 
 const StyledLink = styled(Link)`
@@ -22,8 +24,22 @@ const StyledLink = styled(Link)`
   text-decoration: none;
 `;
 
+const Button = styled.button`
+  border: 1px;
+  background: none;
+  height: 100%;
+  cursor: pointer;
+  margin-left: 50px;
+`;
+
 class Header extends React.Component {
   render() {
+    let { tryLogout } = this.props;
+
+    const logout = () => {
+      tryLogout();
+    };
+
     return (
       <Div className="headerWrapper">
         <Span className="createWrapper">
@@ -35,9 +51,16 @@ class Header extends React.Component {
         <Span className="listWrapper">
           <StyledLink to="/">목록</StyledLink>
         </Span>
+        <Button onClick={logout}>로그아웃</Button>
       </Div>
     );
   }
 }
 
-export default Header;
+let mapDispatchToProps = (dispatch) => ({
+  tryLogout: () => {
+    return tryLogoutAndDispatch(dispatch);
+  },
+});
+
+export default connect(null, mapDispatchToProps)(Header);
