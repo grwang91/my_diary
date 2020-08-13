@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { tryLoginAndDispatch } from "../actions/loadActions";
-import { Redirect } from "react-router-dom";
 
 const Wrapper = styled.div`
   min-height: 50vh;
@@ -54,10 +53,6 @@ const StyledLink = styled(Link)`
 
 class Login extends React.Component {
   render() {
-    if (this.props.authorization) {
-      return <Redirect to="/"></Redirect>;
-    }
-
     let { tryLoginAndDispatch } = this.props;
     const tryLogin = () => {
       tryLoginAndDispatch(this.state.loginID, this.state.password);

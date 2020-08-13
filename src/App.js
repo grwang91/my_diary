@@ -8,6 +8,7 @@ import Diary from "./routes/Diary";
 import Login from "./routes/Login";
 import Signup from "./routes/Signup";
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 
 class App extends React.Component {
   render() {
