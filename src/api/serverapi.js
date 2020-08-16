@@ -4,6 +4,17 @@ import { amazonurl } from "../common/serverurl";
 const baseurl = localurl;
 
 class serverapi {
+  static checkTokenValid(authorization) {
+    return fetch(baseurl + "check", {
+      method: "GET",
+      headers: {
+        authorization,
+      },
+    }).then((response) => {
+      return response.json();
+    });
+  }
+
   static trySignup(loginID, password) {
     return fetch(baseurl + "post/signup", {
       method: "POST",

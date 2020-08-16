@@ -2,6 +2,7 @@ import * as types from "../actions/actionTypes";
 
 let initialState = {
   authorization: null,
+  checkToken: false,
 };
 
 export default function loginReducer(state = initialState, action) {
@@ -9,7 +10,16 @@ export default function loginReducer(state = initialState, action) {
     case types.LOGIN_SUCCESS: {
       let newState = Object.assign({}, state, {
         authorization: action.data.authorization,
+        checkToken: true,
       });
+      return newState;
+    }
+
+    case types.CHECK_VALID: {
+      let newState = Object.assign({}, state, {
+        checkToken: action.data,
+      });
+      console.log(newState);
       return newState;
     }
 

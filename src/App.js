@@ -8,13 +8,19 @@ import Diary from "./routes/Diary";
 import Login from "./routes/Login";
 import Signup from "./routes/Signup";
 import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
+import serverapi from "./api/serverapi";
+import { checkTokenValid } from "./actions/loadActions";
 
 class App extends React.Component {
-  render() {
-    let { authorization } = this.props;
+  componentDidMount() {
+    let { authorization, checkTokenValid } = this.props;
 
-    if (authorization) {
+    checkTokenValid(authorization);
+  }
+
+  render() {
+    let { checkToken } = this.props;
+    if (checkToken) {
       return (
         <Router>
           <Header />
@@ -43,6 +49,13 @@ class App extends React.Component {
 
 const mapStateToProps = (state) => ({
   authorization: state.loginReducer.authorization,
+  checkToken: state.loginReducer.checkToken,
 });
 
-export default connect(mapStateToProps)(App);
+const mapDispatchToProps = (dispatch) => ({
+  checkTokenValid: (authorization) => {
+    return checkTokenValid(dispatch)(authorization);
+  },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

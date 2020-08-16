@@ -1,6 +1,21 @@
 import serverapi from "../api/serverapi";
 import * as types from "../actions/actionTypes";
 
+export const checkTokenValid = (dispatch) => (authorization) => {
+  return serverapi.checkTokenValid(authorization).then((response) => {
+    let check = false;
+    if (response.message === "Success") {
+      check = true;
+    }
+    dispatch({
+      type: types.CHECK_VALID,
+      data: {
+        check,
+      },
+    });
+  });
+};
+
 export const tryLogoutAndDispatch = (dispatch) => {
   console.log("logout");
   dispatch({
@@ -23,7 +38,6 @@ export const tryLoginAndDispatch = (dispatch) => (loginID, password) => {
   return serverapi.tryLogin(loginID, password).then((response) => {
     let authorization = response.headers.get("authorization");
     response.json().then((data) => {
-      console.log(data);
       if (data.message === "Success") {
         console.log("login success");
         dispatch({
