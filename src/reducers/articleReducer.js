@@ -1,5 +1,4 @@
 import * as types from "../actions/actionTypes";
-import produce from "immer";
 
 let initialState = {
   diaries: [],

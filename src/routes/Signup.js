@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { trySignupAndLogin } from "../actions/loadActions";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 const Wrapper = styled.div`
   min-height: 50vh;
@@ -34,6 +35,16 @@ const Box = styled.div`
     font-size: 16px;
     font-weight: bold;
   }
+`;
+
+const StyledLink = styled(Link)`
+  width: 10vh;
+  display: flex;
+  justify-content: right;
+  color: black;
+  font-size: 10px;
+  text-decoration: none;
+  margin-left: 20px;
 `;
 
 class Signup extends React.Component {
@@ -74,6 +85,7 @@ class Signup extends React.Component {
             placeholder="password 확인"
           />
           <button onClick={trySignup}>확인</button>
+          <StyledLink to="/login">로그인</StyledLink>
         </Box>
       </Wrapper>
     );
