@@ -41,8 +41,12 @@ class Diary extends React.Component {
     };
 
     const deleteDiary = (authorization, id) => {
-      serverapi.deleteDiary(authorization, id).then(() => {
-        history.push("/");
+      serverapi.deleteDiary(authorization, id).then((response) => {
+        if (response.message === "Success") {
+          history.push("/");
+        } else {
+          alert("작성자가 아닙니다");
+        }
       });
     };
 

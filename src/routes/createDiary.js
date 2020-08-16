@@ -104,6 +104,7 @@ class createDiary extends React.Component {
         serverapi
           .createDiary(this.props.authorization, data)
           .then((response) => {
+            console.log(response);
             history.push(`/`);
           });
       }

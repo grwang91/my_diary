@@ -29,7 +29,7 @@ class serverapi {
   }
 
   static deleteDiary(authorization, id) {
-    return fetch(baseurl + `get/deleteDiary/${id}`, {
+    return fetch(baseurl + `api/deleteDiary/${id}`, {
       method: "GET",
       headers: {
         authorization,
@@ -40,7 +40,7 @@ class serverapi {
   }
 
   static createDiary(authorization, data) {
-    return fetch(baseurl + "post/diary", {
+    return fetch(baseurl + "api/diary", {
       method: "POST",
       headers: {
         authorization,
@@ -53,7 +53,7 @@ class serverapi {
   }
 
   static getDiaries(authorization) {
-    return fetch(baseurl + "get/diaries", {
+    return fetch(baseurl + "api/diaries", {
       method: "GET",
       headers: {
         authorization,

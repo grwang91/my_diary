@@ -23,6 +23,7 @@ export const tryLoginAndDispatch = (dispatch) => (loginID, password) => {
   return serverapi.tryLogin(loginID, password).then((response) => {
     let authorization = response.headers.get("authorization");
     response.json().then((data) => {
+      console.log(data);
       if (data.message === "Success") {
         console.log("login success");
         dispatch({
