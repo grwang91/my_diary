@@ -17,7 +17,7 @@ export default function loginReducer(state = initialState, action) {
 
     case types.CHECK_VALID: {
       let newState = Object.assign({}, state, {
-        checkToken: action.data,
+        checkToken: action.data.check,
       });
       console.log(newState);
       return newState;

@@ -1,7 +1,7 @@
 import { localurl } from "../common/serverurl";
 import { amazonurl } from "../common/serverurl";
 
-const baseurl = localurl;
+const baseurl = amazonurl;
 
 class serverapi {
   static checkTokenValid(authorization) {

@@ -4,6 +4,7 @@ import List from "../components/List";
 import styled from "styled-components";
 import { tryGetDiariesAndDispatch } from "../actions/loadActions";
 import { getCreatedDate } from "../util/DateHandle";
+import { Redirect } from "react-router-dom";
 
 const Div = styled.div`
   display: flex;
@@ -17,15 +18,17 @@ const Div = styled.div`
 class DiaryList extends React.Component {
   componentDidMount() {
     let { tryGetDiariesAndDispatch } = this.props;
+
     tryGetDiariesAndDispatch(this.props.authorization);
   }
 
   render() {
     const { diaries } = this.props;
 
+    console.log(diaries);
     return (
       <Div className="diaryList">
-        <List id={-1} title="제목" createdTime="작성일" />
+        <List id={-1} title="제목" creator="작성자" createdTime="작성일" />
         {diaries.map((diary) => (
           <List
             key={diary.id}

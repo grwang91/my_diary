@@ -94,12 +94,7 @@ class createDiary extends React.Component {
         data.append("title", this.state.title);
         data.append("content", this.state.content);
         data.append("weather", JSON.stringify(weather));
-
-        if (input.files.length === 0) {
-          data.append("selectedFile", "dd");
-        } else {
-          data.append("selectedFile", input.files[0]);
-        }
+        data.append("selectedFile", input.files[0]);
 
         serverapi
           .createDiary(this.props.authorization, data)

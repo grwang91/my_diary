@@ -53,10 +53,11 @@ function distinguishTitle(id, title) {
   );
 }
 
-function List({ title, createdTime, id }) {
+function List({ title, createdTime, id, creator }) {
   return (
     <Wrapper>
       {distinguishTitle(id, title)}
+      <StyledSpan>{creator}</StyledSpan>
       <StyledSpan>{createdTime}</StyledSpan>
     </Wrapper>
   );
