@@ -1,7 +1,7 @@
 import { localurl } from "../common/serverurl";
 import { amazonurl } from "../common/serverurl";
 
-const baseurl = amazonurl;
+const baseurl = localurl;
 
 class serverapi {
   static checkTokenValid(authorization) {
@@ -41,10 +41,22 @@ class serverapi {
 
   static deleteDiary(authorization, id) {
     return fetch(baseurl + `api/deleteDiary/${id}`, {
-      method: "GET",
+      method: "DELETE",
       headers: {
         authorization,
       },
+    }).then((response) => {
+      return response.json();
+    });
+  }
+  static updateDiary(authorization, data) {
+    return fetch(baseurl + "api/update", {
+      method: "PUT",
+      headers: {
+        authorization,
+        Accept: "application/json, application/xml, text/plain, text/html",
+      },
+      body: data,
     }).then((response) => {
       return response.json();
     });

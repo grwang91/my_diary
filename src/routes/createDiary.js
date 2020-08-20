@@ -73,9 +73,20 @@ class createDiary extends React.Component {
   state = {
     title: "",
     content: "",
+    modify: false,
+    id: -1,
   };
 
   componentDidMount() {
+    const { location } = this.props;
+    if (location.state) {
+      this.setState({
+        title: location.state.title,
+        content: location.state.content,
+        update: location.state.update,
+        id: location.state.id,
+      });
+    }
     askForCoords();
   }
 
@@ -99,9 +110,38 @@ class createDiary extends React.Component {
         serverapi
           .createDiary(this.props.authorization, data)
           .then((response) => {
-            console.log(response);
             history.push(`/`);
           });
+      }
+    };
+
+    let updateDiary = () => {
+      if (this.state.title === "") {
+        alert("제목을 입력하세요");
+      } else if (this.state.content === "") {
+        alert("내용을 입력하세요");
+      } else {
+        var data = new FormData();
+        data.append("title", this.state.title);
+        data.append("content", this.state.content);
+        data.append("id", this.state.id);
+      }
+
+      serverapi.updateDiary(this.props.authorization, data).then((response) => {
+        console.log(response);
+        if (response.message === "Success") {
+          history.push("/");
+        } else {
+          alert("작성자가 아닙니다");
+        }
+      });
+    };
+
+    let saveOrUpdateDiary = () => {
+      if (this.state.update) {
+        updateDiary();
+      } else {
+        saveDiary();
       }
     };
 
@@ -123,7 +163,7 @@ class createDiary extends React.Component {
             value={this.state.content}
           />
           <Title type="file"></Title>
-          <Button onClick={saveDiary}>완료</Button>
+          <Button onClick={saveOrUpdateDiary}>완료</Button>
         </Wrapper>
       </>
     );

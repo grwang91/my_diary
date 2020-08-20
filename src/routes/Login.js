@@ -52,10 +52,18 @@ const StyledLink = styled(Link)`
 `;
 
 class Login extends React.Component {
+  state = {
+    loginID: null,
+    password: null,
+  };
   render() {
     let { tryLoginAndDispatch } = this.props;
     const tryLogin = () => {
-      tryLoginAndDispatch(this.state.loginID, this.state.password);
+      if (this.state.loginID == null || this.state.password == null) {
+        alert("다 입력하세요");
+      } else {
+        tryLoginAndDispatch(this.state.loginID, this.state.password);
+      }
     };
 
     return (

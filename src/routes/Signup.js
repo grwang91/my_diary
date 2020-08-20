@@ -48,6 +48,12 @@ const StyledLink = styled(Link)`
 `;
 
 class Signup extends React.Component {
+  state = {
+    loginID: null,
+    password: null,
+    passwordCheck: null,
+  };
+
   render() {
     let { trySignupAndLogin } = this.props;
     let trySignup = () => {

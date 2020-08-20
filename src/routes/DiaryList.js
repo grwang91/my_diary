@@ -4,7 +4,6 @@ import List from "../components/List";
 import styled from "styled-components";
 import { tryGetDiariesAndDispatch } from "../actions/loadActions";
 import { getCreatedDate } from "../util/DateHandle";
-import { Redirect } from "react-router-dom";
 
 const Div = styled.div`
   display: flex;
@@ -34,6 +33,7 @@ class DiaryList extends React.Component {
             key={diary.id}
             id={diary.id}
             title={diary.title}
+            creator={diary.usrName}
             createdTime={getCreatedDate(diary.date)}
           />
         ))}

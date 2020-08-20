@@ -8,7 +8,6 @@ import Diary from "./routes/Diary";
 import Login from "./routes/Login";
 import Signup from "./routes/Signup";
 import { connect } from "react-redux";
-import serverapi from "./api/serverapi";
 import { checkTokenValid } from "./actions/loadActions";
 
 class App extends React.Component {

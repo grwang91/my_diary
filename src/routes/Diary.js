@@ -4,6 +4,7 @@ import React from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import serverapi from "../api/serverapi";
+import { Link } from "react-router-dom";
 
 const Div = styled.div`
   display: flex;
@@ -14,7 +15,23 @@ const Div = styled.div`
 `;
 
 const Button = styled.button`
-  margin-left: 60px;
+  //width: 40px;
+  color: black;
+  font-size: 16px;
+  padding: 0 20px 0 20px;
+  border: 1px solid black;
+  background: white;
+  margin-left: 20px;
+`;
+
+const StyledLink = styled(Link)`
+  width: 20px;
+  color: black;
+  font-size: 16px;
+  text-decoration: none;
+  padding: 0 20px 0 20px;
+  border: 1px solid black;
+  margin-left: 20px;
 `;
 
 class Diary extends React.Component {
@@ -65,6 +82,19 @@ class Diary extends React.Component {
           >
             삭제
           </Button>
+          <StyledLink
+            to={{
+              pathname: "/createDiary",
+              state: {
+                title: diary.title,
+                content: diary.content,
+                update: true,
+                id: diary.id,
+              },
+            }}
+          >
+            수정
+          </StyledLink>
         </h2>
         <h3>{diary.title}</h3>
         <h4>{diary.content}</h4>
