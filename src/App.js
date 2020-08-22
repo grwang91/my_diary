@@ -2,13 +2,18 @@ import React from "react";
 import { HashRouter as Router, Route, Switch } from "react-router-dom";
 import DiaryList from "./routes/DiaryList";
 import createDiary from "./routes/createDiary";
-import Header from "./components/Header";
 import DiaryListMap from "./routes/DiaryListMap";
 import Diary from "./routes/Diary";
 import Login from "./routes/Login";
 import Signup from "./routes/Signup";
 import { connect } from "react-redux";
 import { checkTokenValid } from "./actions/loadActions";
+import Navigation from "./components/Navigation";
+import styled from "styled-components";
+
+const Div = styled.div`
+  height: 20px;
+`;
 
 class App extends React.Component {
   componentDidMount() {
@@ -22,7 +27,8 @@ class App extends React.Component {
     if (checkToken) {
       return (
         <Router>
-          <Header />
+          <Navigation />
+          <Div />
           <Switch>
             <Route exact path="/" component={DiaryList} />
             <Route exact path="/diary/:id" component={Diary} />

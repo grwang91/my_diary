@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import { tryLogoutAndDispatch } from "../actions/loadActions";
+import { Button } from "@material-ui/core";
 
 const Span = styled.span`
   padding: 10px;
@@ -18,19 +19,13 @@ const Div = styled.div`
   align-items: center;
 `;
 
-const StyledLink = styled(Link)`
-  color: black;
-  font-size: 20px;
-  text-decoration: none;
-`;
-
-const Button = styled.button`
-  border: 1px;
-  background: none;
-  height: 100%;
-  cursor: pointer;
-  margin-left: 50px;
-`;
+// const Button = styled.button`
+//   border: 1px;
+//   background: none;
+//   height: 100%;
+//   cursor: pointer;
+//   margin-left: 50px;
+// `;
 
 class Header extends React.Component {
   render() {
@@ -42,16 +37,31 @@ class Header extends React.Component {
 
     return (
       <Div className="headerWrapper">
-        <Span className="createWrapper">
-          <StyledLink to="/createDiary">새 글</StyledLink>
-        </Span>
-        <Span className="mapWrapper">
-          <StyledLink to="/diaryListMap">지도로 보기</StyledLink>
-        </Span>
-        <Span className="listWrapper">
-          <StyledLink to="/">목록</StyledLink>
-        </Span>
-        <Button onClick={logout}>로그아웃</Button>
+        <Button
+          variant="contained"
+          color="default"
+          component={Link}
+          to="/createDiary"
+        >
+          새 글
+        </Button>
+
+        <Button
+          variant="contained"
+          color="default"
+          component={Link}
+          to="/diaryListMap"
+        >
+          지도로 보기
+        </Button>
+
+        <Button variant="contained" color="default" component={Link} to="/">
+          목록
+        </Button>
+
+        <Button variant="contained" onClick={logout}>
+          로그아웃
+        </Button>
       </Div>
     );
   }

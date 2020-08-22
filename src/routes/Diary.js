@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { connect } from "react-redux";
 import serverapi from "../api/serverapi";
 import { Link } from "react-router-dom";
+import { Button } from "@material-ui/core";
 
 const Div = styled.div`
   display: flex;
@@ -18,15 +19,15 @@ const Img = styled.img`
   width: 30%;
 `;
 
-const Button = styled.button`
-  //width: 40px;
-  color: black;
-  font-size: 16px;
-  padding: 0 20px 0 20px;
-  border: 1px solid black;
-  background: white;
-  margin-left: 20px;
-`;
+// const Button = styled.button`
+//   //width: 40px;
+//   color: black;
+//   font-size: 16px;
+//   padding: 0 20px 0 20px;
+//   border: 1px solid black;
+//   background: white;
+//   margin-left: 20px;
+// `;
 
 const StyledLink = styled(Link)`
   width: 20px;
@@ -82,6 +83,8 @@ class Diary extends React.Component {
         <h2>
           {getDate(diary.date)} {getWeather(diary.weather)}
           <Button
+            variant="contained"
+            color="default"
             onClick={() => deleteDiary(this.props.authorization, diary.id)}
           >
             삭제
