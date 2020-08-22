@@ -14,6 +14,10 @@ const Div = styled.div`
   margin: 40px;
 `;
 
+const Img = styled.img`
+  width: 30%;
+`;
+
 const Button = styled.button`
   //width: 40px;
   color: black;
@@ -96,6 +100,10 @@ class Diary extends React.Component {
             수정
           </StyledLink>
         </h2>
+        {diary.diaryPictures.map((picture) => (
+          <Img key={picture.id} src={picture.pictureUrl} />
+        ))}
+
         <h3>{diary.title}</h3>
         <h4>{diary.content}</h4>
       </Div>
