@@ -1,9 +1,4 @@
-//날씨정보 API받아서 추가하기
-//사진 업로드
-//내용 입력창 다듬기
-
 import React from "react";
-import styled from "styled-components";
 import serverapi from "../api/serverapi";
 import { connect } from "react-redux";
 import { TextField, Button, Container } from "@material-ui/core";

@@ -7,36 +7,8 @@ import serverapi from "../api/serverapi";
 import { Link } from "react-router-dom";
 import { Button, Container } from "@material-ui/core";
 
-const Div = styled.div`
-  display: flex;
-  justify-content: center;
-  //align-items: center;
-  flex-direction: column;
-  margin: 40px;
-`;
-
 const Img = styled.img`
   width: 30%;
-`;
-
-// const Button = styled.button`
-//   //width: 40px;
-//   color: black;
-//   font-size: 16px;
-//   padding: 0 20px 0 20px;
-//   border: 1px solid black;
-//   background: white;
-//   margin-left: 20px;
-// `;
-
-const StyledLink = styled(Link)`
-  width: 20px;
-  color: black;
-  font-size: 16px;
-  text-decoration: none;
-  padding: 0 20px 0 20px;
-  border: 1px solid black;
-  margin-left: 20px;
 `;
 
 class Diary extends React.Component {
@@ -91,10 +63,17 @@ class Diary extends React.Component {
           <Img key={picture.id} src={picture.pictureUrl} />
         ))}
 
-        <h3>{diary.title}</h3>
-        <h4>{diary.content}</h4>
+        <h2>{diary.title}</h2>
+        <h4>
+          {diary.content.split("\n").map((txt) => (
+            <>
+              {txt}
+              <br />
+            </>
+          ))}
+        </h4>
 
-        {this.props.usrName == diary.usrName ? (
+        {this.props.usrName === diary.usrName ? (
           <>
             <Button
               variant="contained"

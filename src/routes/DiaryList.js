@@ -27,8 +27,6 @@ class DiaryList extends React.Component {
   render() {
     const { diaries } = this.props;
 
-    console.log(diaries);
-
     let reverseDiaries = diaries.reverse();
     return (
       <Container>
