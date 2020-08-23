@@ -1,17 +1,20 @@
 import React from "react";
 import { connect } from "react-redux";
-import List from "../components/List";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
+import {
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
+  Container,
+} from "@material-ui/core";
 import { tryGetDiariesAndDispatch } from "../actions/loadActions";
 import { getCreatedDate } from "../util/DateHandle";
 
-const Div = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  width: 80%;
-  padding: 0 50px 0 50px;
+const StyledLink = styled(Link)`
+  text-decoration: none;
 `;
 
 class DiaryList extends React.Component {
@@ -25,19 +28,38 @@ class DiaryList extends React.Component {
     const { diaries } = this.props;
 
     console.log(diaries);
+
+    let reverseDiaries = diaries.reverse();
     return (
-      <Div className="diaryList">
-        <List id={-1} title="제목" creator="작성자" createdTime="작성일" />
-        {diaries.map((diary) => (
-          <List
-            key={diary.id}
-            id={diary.id}
-            title={diary.title}
-            creator={diary.usrName}
-            createdTime={getCreatedDate(diary.date)}
-          />
-        ))}
-      </Div>
+      <Container>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>제목</TableCell>
+              <TableCell>작성자</TableCell>
+              <TableCell>작성일</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {reverseDiaries.map((diary) => (
+              <TableRow
+                key={diary.id}
+                component={StyledLink}
+                to={{
+                  pathname: `/diary/${diary.id}`,
+                  state: {
+                    id: diary.id,
+                  },
+                }}
+              >
+                <TableCell>{diary.title}</TableCell>
+                <TableCell>{diary.usrName}</TableCell>
+                <TableCell>{getCreatedDate(diary.date)}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </Container>
     );
   }
 }

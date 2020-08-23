@@ -6,33 +6,7 @@ import React from "react";
 import styled from "styled-components";
 import serverapi from "../api/serverapi";
 import { connect } from "react-redux";
-
-const Wrapper = styled.div`
-  display: flex;
-  color: red;
-  flex-direction: column;
-  align-items: center;
-  height: 800px;
-`;
-
-const Title = styled.input`
-  width: 80%;
-  height: 25px;
-  margin-bottom: 20px;
-`;
-
-const Content = styled.input`
-  width: 80%;
-  height: 100%;
-  vertical-align: text-top;
-  white-space: normal;
-`;
-
-const Button = styled.button`
-  width: 80%;
-  height: 40px;
-  margin-top: 20px;
-`;
+import { TextField, Button, Container } from "@material-ui/core";
 
 let weather = {};
 
@@ -107,6 +81,8 @@ class createDiary extends React.Component {
         data.append("weather", JSON.stringify(weather));
         data.append("selectedFile", input.files[0]);
 
+        console.log(input.files[0]);
+
         serverapi
           .createDiary(this.props.authorization, data)
           .then((response) => {
@@ -147,24 +123,26 @@ class createDiary extends React.Component {
 
     return (
       <>
-        <Wrapper className="createWrapper">
-          <Title
-            placeholder="title"
+        <Container>
+          <TextField
+            label="title"
             onChange={(e) => {
               this.setState({ title: e.target.value });
             }}
             value={this.state.title}
           />
-          <Content
-            placeholder="content"
+          <TextField
+            label="content"
+            fullWidth="true"
+            multiline="true"
             onChange={(e) => {
               this.setState({ content: e.target.value });
             }}
             value={this.state.content}
           />
-          <Title type="file"></Title>
+          <TextField type="file" />
           <Button onClick={saveOrUpdateDiary}>완료</Button>
-        </Wrapper>
+        </Container>
       </>
     );
   }

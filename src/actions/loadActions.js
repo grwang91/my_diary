@@ -35,7 +35,8 @@ export const trySignupAndLogin = (dispatch) => (loginID, password) => {
 };
 
 export const tryLoginAndDispatch = (dispatch) => (loginID, password) => {
-  return serverapi.tryLogin(loginID, password).then((response) => {
+  let userName = loginID;
+  return serverapi.tryLogin(loginID, password).then((response, loginID) => {
     let authorization = response.headers.get("authorization");
     response.json().then((data) => {
       if (data.message === "Success") {
@@ -44,6 +45,7 @@ export const tryLoginAndDispatch = (dispatch) => (loginID, password) => {
           type: types.LOGIN_SUCCESS,
           data: {
             authorization,
+            userName,
           },
         });
       } else {

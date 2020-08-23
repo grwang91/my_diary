@@ -3,6 +3,7 @@ import * as types from "../actions/actionTypes";
 let initialState = {
   authorization: null,
   checkToken: false,
+  userName: null,
 };
 
 export default function loginReducer(state = initialState, action) {
@@ -11,6 +12,7 @@ export default function loginReducer(state = initialState, action) {
       let newState = Object.assign({}, state, {
         authorization: action.data.authorization,
         checkToken: true,
+        userName: action.data.userName,
       });
       return newState;
     }
@@ -19,7 +21,6 @@ export default function loginReducer(state = initialState, action) {
       let newState = Object.assign({}, state, {
         checkToken: action.data.check,
       });
-      console.log(newState);
       return newState;
     }
 

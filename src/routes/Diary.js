@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { connect } from "react-redux";
 import serverapi from "../api/serverapi";
 import { Link } from "react-router-dom";
-import { Button } from "@material-ui/core";
+import { Button, Container } from "@material-ui/core";
 
 const Div = styled.div`
   display: flex;
@@ -62,14 +62,18 @@ class Diary extends React.Component {
       return `날씨 : ${parseInt(weather.temperature + 0.5)}도, ${weather.sky}`;
     };
 
-    const deleteDiary = (authorization, id) => {
-      serverapi.deleteDiary(authorization, id).then((response) => {
-        if (response.message === "Success") {
-          history.push("/");
-        } else {
-          alert("작성자가 아닙니다");
-        }
-      });
+    const deleteDiary = (authorization, id, usrName) => {
+      if (usrName !== this.props.usrName) {
+        alert("작성자가 아닙니다");
+      } else {
+        serverapi.deleteDiary(authorization, id).then((response) => {
+          if (response.message === "Success") {
+            history.push("/");
+          } else {
+            alert("작성자가 아닙니다");
+          }
+        });
+      }
     };
 
     if (!location.state) {
@@ -79,29 +83,9 @@ class Diary extends React.Component {
     let diary = diaries.find((diary) => diary.id === location.state.id);
 
     return (
-      <Div>
+      <Container>
         <h2>
           {getDate(diary.date)} {getWeather(diary.weather)}
-          <Button
-            variant="contained"
-            color="default"
-            onClick={() => deleteDiary(this.props.authorization, diary.id)}
-          >
-            삭제
-          </Button>
-          <StyledLink
-            to={{
-              pathname: "/createDiary",
-              state: {
-                title: diary.title,
-                content: diary.content,
-                update: true,
-                id: diary.id,
-              },
-            }}
-          >
-            수정
-          </StyledLink>
         </h2>
         {diary.diaryPictures.map((picture) => (
           <Img key={picture.id} src={picture.pictureUrl} />
@@ -109,7 +93,38 @@ class Diary extends React.Component {
 
         <h3>{diary.title}</h3>
         <h4>{diary.content}</h4>
-      </Div>
+
+        {this.props.usrName == diary.usrName ? (
+          <>
+            <Button
+              variant="contained"
+              color="default"
+              onClick={() =>
+                deleteDiary(this.props.authorization, diary.id, diary.usrName)
+              }
+            >
+              삭제
+            </Button>
+            <Button
+              variant="contained"
+              component={Link}
+              to={{
+                pathname: "/createDiary",
+                state: {
+                  title: diary.title,
+                  content: diary.content,
+                  update: true,
+                  id: diary.id,
+                },
+              }}
+            >
+              수정
+            </Button>
+          </>
+        ) : (
+          <></>
+        )}
+      </Container>
     );
   }
 }
@@ -118,6 +133,7 @@ function mapStateToProps(state) {
   return {
     diaries: state.articleReducer.diaries,
     authorization: state.loginReducer.authorization,
+    usrName: state.loginReducer.userName,
   };
 }
 
