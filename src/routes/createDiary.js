@@ -136,7 +136,9 @@ class createDiary extends React.Component {
             value={this.state.content}
           />
           <TextField type="file" />
-          <Button onClick={saveOrUpdateDiary}>완료</Button>
+          <div>
+            <Button onClick={saveOrUpdateDiary}>완료</Button>
+          </div>
         </Container>
       </>
     );

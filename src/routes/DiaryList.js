@@ -30,7 +30,7 @@ class DiaryList extends React.Component {
     let reverseDiaries = diaries.reverse();
     return (
       <Container>
-        <Table>
+        <Table stickyHeader>
           <TableHead>
             <TableRow>
               <TableCell>제목</TableCell>
