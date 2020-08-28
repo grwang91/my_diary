@@ -1,10 +1,14 @@
-//지도 API 연동
-
 import React from "react";
+import NaverMap from "../components/NaverMap";
+import { Container } from "@material-ui/core";
 
 class DiaryListMap extends React.Component {
   render() {
-    return <h1>diaryListMap</h1>;
+    return (
+      <Container>
+        <NaverMap></NaverMap>
+      </Container>
+    );
   }
 }
 

@@ -2,6 +2,7 @@ import React from "react";
 import serverapi from "../api/serverapi";
 import { connect } from "react-redux";
 import { TextField, Button, Container } from "@material-ui/core";
+import EXIF from "exif-js";
 
 let weather = {};
 
@@ -75,6 +76,11 @@ class createDiary extends React.Component {
         data.append("content", this.state.content);
         data.append("weather", JSON.stringify(weather));
         data.append("selectedFile", input.files[0]);
+
+        EXIF.getData(input.files[0], function () {
+          let dat = EXIF.getAllTags(this);
+          console.log(dat);
+        });
 
         console.log(input.files[0]);
 
