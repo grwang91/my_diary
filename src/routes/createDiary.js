@@ -6,6 +6,8 @@ import EXIF from "exif-js";
 
 let weather = {};
 
+let geoData = {};
+
 let getWeather = (lat, lng) => {
   const API_KEY = "0a3907ad9c80678e723b18b374fb6c99";
 
@@ -32,6 +34,10 @@ let handleGeoError = () => {
 let handleGeoSuccess = (position) => {
   const latitude = position.coords.latitude;
   const longitude = position.coords.longitude;
+  geoData = {
+    latitude,
+    longitude,
+  };
   getWeather(latitude, longitude);
 };
 
@@ -76,13 +82,14 @@ class createDiary extends React.Component {
         data.append("content", this.state.content);
         data.append("weather", JSON.stringify(weather));
         data.append("selectedFile", input.files[0]);
+        data.append("geoData", JSON.stringify(geoData));
 
-        EXIF.getData(input.files[0], function () {
-          let dat = EXIF.getAllTags(this);
-          console.log(dat);
-        });
+        // EXIF.getData(input.files[0], function () {
+        //   let dat = EXIF.getAllTags(this);
+        //   console.log(dat);
+        // });
 
-        console.log(input.files[0]);
+        // console.log(input.files[0]);
 
         serverapi
           .createDiary(this.props.authorization, data)
@@ -127,6 +134,7 @@ class createDiary extends React.Component {
         <Container>
           <TextField
             label="title"
+            fullWidth="true"
             onChange={(e) => {
               this.setState({ title: e.target.value });
             }}
