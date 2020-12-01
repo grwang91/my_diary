@@ -1,1 +1,1 @@
-my diary app. (2020)
+게시판 페이지 front (2020)
