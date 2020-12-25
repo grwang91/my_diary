@@ -2,7 +2,6 @@ import React from "react";
 import serverapi from "../api/serverapi";
 import { connect } from "react-redux";
 import { TextField, Button, Container } from "@material-ui/core";
-import EXIF from "exif-js";
 
 let weather = {};
 

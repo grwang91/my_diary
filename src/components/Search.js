@@ -12,13 +12,13 @@ import {
 } from "@reach/combobox";
 import "@reach/combobox/styles.css";
 
-export default function Search() {
+export default function Search({ panTo }) {
   const {
     ready,
     value,
     suggestions: { status, data },
     setValue,
-    clearSuggestion,
+    clearSuggestions,
   } = usePlacesAutocomplete({
     requestOptions: {
       location: { lat: () => 37.29, lng: () => 127.05 },
@@ -28,8 +28,14 @@ export default function Search() {
 
   return (
     <Combobox
-      onSelect={(address) => {
-        console.log(address);
+      onSelect={async (address) => {
+        setValue(address, false);
+        clearSuggestions();
+        try {
+          const results = await getGeocode({ address });
+          const { lat, lng } = await getLatLng(results[0]);
+          panTo({ lat, lng });
+        } catch (error) {}
       }}
     >
       <ComboboxInput

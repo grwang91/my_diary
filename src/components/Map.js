@@ -9,6 +9,17 @@ import {
   InfoWindow,
 } from "@react-google-maps/api";
 import Search from "./Search";
+import "./Map.css";
+
+// const Div = styled.div`
+//   position: absolute;
+//   top: 1rem;
+//   left: 50%;
+//   transform: translateX(-50%);
+//   width: 100%;
+//   max-width: 400px;
+//   z-index: 10;
+// `;
 
 const libraries = ["places"];
 const mapContainerStyle = {
@@ -30,19 +41,30 @@ export default function Map() {
     googleMapsApiKey: GOOGLE_MAP_API_KEY,
     libraries,
   });
+
+  const mapRef = React.useRef();
+  const onMapLoad = React.useCallback((map) => {
+    mapRef.current = map;
+  }, []);
   const [markers, setMarkers] = React.useState([]);
+
+  const panTo = React.useCallback(({ lat, lng }) => {
+    mapRef.current.panTo({ lat, lng });
+    mapRef.current.setZoom(18);
+  }, []);
 
   if (loadError) return "Error loading maps";
   if (!isLoaded) return "Loading Maps";
 
   return (
-    <>
-      <Search />
+    <div className="search">
+      <Search panTo={panTo} />
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
         zoom={15}
         center={center}
         options={options}
+        onLoad={onMapLoad}
         onDblClick={(event) => {
           setMarkers((current) => [
             ...current,
@@ -61,6 +83,6 @@ export default function Map() {
           />
         ))}
       </GoogleMap>
-    </>
+    </div>
   );
 }
