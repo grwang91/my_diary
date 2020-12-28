@@ -10,6 +10,10 @@ export default function articleReducer(state = initialState, action) {
       return { ...state, diaries: action.data };
     }
 
+    case types.GET_MARKERS: {
+      return { ...state, marker: action.data };
+    }
+
     default:
       return state;
   }

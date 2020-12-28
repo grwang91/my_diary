@@ -1,6 +1,5 @@
 import React from "react";
 import Map from "../components/Map";
-import { Container } from "@material-ui/core";
 import { connect } from "react-redux";
 
 class DiaryListMap extends React.Component {

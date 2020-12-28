@@ -4,3 +4,4 @@ export const LOAD_DIARIES_SUCCESS = "LOAD_DIARIES_SUCCESS";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const TRY_LOGOUT = "TRY_LOGOUT";
 export const CHECK_VALID = "CHECK_VALID";
+export const GET_MARKERS = "GET_MARKERS";

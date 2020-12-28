@@ -4,6 +4,30 @@ import { amazonurl } from "../common/serverurl";
 const baseurl = localurl;
 
 class serverapi {
+  static tryGetMarkers(authorization) {
+    return fetch(baseurl + "api/getMarkers", {
+      method: "GET",
+      headers: { authorization },
+    }).then((response) => {
+      return response.json();
+    });
+  }
+
+  static tryAddMarker(authorization, placeName, placeContent, coord) {
+    return fetch(baseurl + "api/addMarker", {
+      method: "POST",
+      headers: { authorization, "content-type": "application/json" },
+      body: JSON.stringify({
+        placeName,
+        placeContent,
+        lat: coord.lat,
+        lng: coord.lng,
+      }),
+    }).then((response) => {
+      return response.json();
+    });
+  }
+
   static checkTokenValid(authorization) {
     return fetch(baseurl + "check", {
       method: "GET",

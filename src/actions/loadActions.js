@@ -1,6 +1,17 @@
 import serverapi from "../api/serverapi";
 import * as types from "../actions/actionTypes";
 
+export const tryGetMarkerAndDispatch = (dispatch, authorization) => {
+  return serverapi.tryGetMarkers(authorization).then((response) => {
+    if (response.message === "Success") {
+      dispatch({
+        type: types.GET_MARKERS,
+        data: response.data,
+      });
+    }
+  });
+};
+
 export const checkTokenValid = (dispatch) => (authorization) => {
   return serverapi.checkTokenValid(authorization).then((response) => {
     let check = false;
