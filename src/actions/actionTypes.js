@@ -5,3 +5,6 @@ export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const TRY_LOGOUT = "TRY_LOGOUT";
 export const CHECK_VALID = "CHECK_VALID";
 export const GET_MARKERS = "GET_MARKERS";
+export const SET_MARKER_TO_INPUT = "SET_MARKER_TO_INPUT";
+export const SET_ASK_MARK = "SET_ASK_MARK";
+export const SET_COORD = "SET_COORD";

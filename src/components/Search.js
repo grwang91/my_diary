@@ -7,12 +7,19 @@ import {
   Combobox,
   ComboboxInput,
   ComboboxPopover,
-  ComboboxList,
   ComboboxOption,
 } from "@reach/combobox";
 import "@reach/combobox/styles.css";
+import AskMark from "./AskMarker";
+import { useSelector, useDispatch } from "react-redux";
+import { setAskMark } from "../actions/loadActions";
 
 export default function Search({ panTo }) {
+  const [coord, setCoord] = React.useState({ lat: null, lng: null });
+  const askMark = useSelector((state) => state.markerReducer.askMark);
+
+  const dispatch = useDispatch();
+
   const {
     ready,
     value,
@@ -26,6 +33,8 @@ export default function Search({ panTo }) {
     },
   });
 
+  let addr;
+
   return (
     <Combobox
       onSelect={async (address) => {
@@ -34,7 +43,9 @@ export default function Search({ panTo }) {
         try {
           const results = await getGeocode({ address });
           const { lat, lng } = await getLatLng(results[0]);
+          setCoord({ lat, lng });
           panTo({ lat, lng });
+          setAskMark(dispatch, true);
         } catch (error) {}
       }}
     >
@@ -52,6 +63,7 @@ export default function Search({ panTo }) {
             <ComboboxOption key={id} value={description} />
           ))}
       </ComboboxPopover>
+      {askMark ? <AskMark coord={coord} /> : null}
     </Combobox>
   );
 }

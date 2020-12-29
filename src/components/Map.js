@@ -10,7 +10,12 @@ import Search from "./Search";
 import "./Map.css";
 import MarkerInput from "./MarkerInput";
 import { useSelector, useDispatch } from "react-redux";
-import { tryGetMarkerAndDispatch } from "../actions/loadActions";
+import {
+  tryGetMarkerAndDispatch,
+  setMarkerToInput,
+  setAskMark,
+  setCoord,
+} from "../actions/loadActions";
 
 const libraries = ["places"];
 const mapContainerStyle = {
@@ -32,15 +37,17 @@ export default function Map() {
     googleMapsApiKey: GOOGLE_MAP_API_KEY,
     libraries,
   });
-  const [markers, setMarkers] = React.useState(
-    useSelector((state) => state.markerReducer.markers)
-  );
+
   const [selected, setSelected] = React.useState(null);
-  const [markerToInput, setMarkerToInput] = React.useState(false);
-  const [authorization, setAuthorization] = React.useState(
-    useSelector((state) => state.loginReducer.authorization)
+
+  const markers = useSelector((state) => state.markerReducer.markers);
+  const coord = useSelector((state) => state.markerReducer.coord);
+  const authorization = useSelector(
+    (state) => state.loginReducer.authorization
   );
-  const [coord, setCoord] = React.useState({ lat: null, lng: null });
+  const markerToInput = useSelector(
+    (state) => state.markerReducer.markerToInput
+  );
 
   const dispatch = useDispatch();
   const mapRef = React.useRef();
@@ -54,13 +61,14 @@ export default function Map() {
   }, []);
 
   const onMapDblClick = React.useCallback((event) => {
-    setCoord({ lat: event.latLng.lat(), lng: event.latLng.lng() });
-    setMarkerToInput(true);
+    setCoord(dispatch, { lat: event.latLng.lat(), lng: event.latLng.lng() });
+    setMarkerToInput(dispatch, true);
   });
 
   React.useEffect(() => {
-    console.log("dd");
     tryGetMarkerAndDispatch(dispatch, authorization);
+    setMarkerToInput(dispatch, false);
+    setAskMark(dispatch, false);
   }, []);
 
   if (loadError) return "Error loading maps";
@@ -78,7 +86,7 @@ export default function Map() {
         onDblClick={onMapDblClick}
         onClick={() => {
           setSelected(null);
-          setMarkerToInput(false);
+          setMarkerToInput(dispatch, false);
         }}
       >
         {markers.map((marker) => (

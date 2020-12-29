@@ -6,16 +6,20 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import serverapi from "../api/serverapi";
+import { tryGetMarkerAndDispatch } from "../actions/loadActions";
 
 export default function FormDialog(coord) {
   const [open, setOpen] = React.useState(true);
   const [placeName, setPlaceName] = React.useState("");
   const [placeContent, setPlaceContent] = React.useState("");
-  const [authorization, setAuthorization] = React.useState(
-    useSelector((state) => state.loginReducer.authorization)
+
+  const authorization = useSelector(
+    (state) => state.loginReducer.authorization
   );
+
+  const dispatch = useDispatch();
 
   const handleOk = () => {
     if (placeName === "") {
@@ -24,7 +28,7 @@ export default function FormDialog(coord) {
       serverapi
         .tryAddMarker(authorization, placeName, placeContent, coord.coord)
         .then((response) => {
-          console.log(response);
+          tryGetMarkerAndDispatch(dispatch, authorization);
           setOpen(false);
         });
     }

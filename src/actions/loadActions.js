@@ -1,6 +1,27 @@
 import serverapi from "../api/serverapi";
 import * as types from "../actions/actionTypes";
 
+export const setCoord = (dispatch, coord) => {
+  dispatch({
+    type: types.SET_COORD,
+    data: coord,
+  });
+};
+
+export const setAskMark = (dispatch, state) => {
+  dispatch({
+    type: types.SET_ASK_MARK,
+    data: state,
+  });
+};
+
+export const setMarkerToInput = (dispatch, state) => {
+  dispatch({
+    type: types.SET_MARKER_TO_INPUT,
+    data: state,
+  });
+};
+
 export const tryGetMarkerAndDispatch = (dispatch, authorization) => {
   return serverapi.tryGetMarkers(authorization).then((response) => {
     if (response.message === "Success") {
