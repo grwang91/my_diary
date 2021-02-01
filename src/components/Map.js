@@ -23,8 +23,8 @@ const mapContainerStyle = {
   height: "93vh",
 };
 const center = {
-  lat: 37.29,
-  lng: 127.05,
+  lat: 37.566535,
+  lng: 126.9779692,
 };
 const options = {
   disableDefaultUI: true,
@@ -107,7 +107,7 @@ export default function Map() {
             }}
           >
             <div>
-              <h2> {selected.placeName}</h2>
+              <h2>{selected.placeName}</h2>
               <p>{selected.placeContent}</p>
             </div>
           </InfoWindow>

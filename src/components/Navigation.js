@@ -18,7 +18,7 @@ class Navigation extends React.Component {
       <AppBar position="static">
         <Tabs value={false} centered indicatorColor="secondary">
           <Tab label="새 글" component={Link} to="/createDiary" />
-          <Tab label="지도로 보기" component={Link} to="/diaryListMap" />
+          <Tab label="지도" component={Link} to="/diaryListMap" />
           <Tab label="목록" component={Link} to="/" />
           <IconButton color="default" onClick={logout}>
             <ExitToAppOutlined style={{ color: red[0] }} />

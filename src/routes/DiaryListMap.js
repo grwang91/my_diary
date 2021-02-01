@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 class DiaryListMap extends React.Component {
   render() {
-    const { diaries } = this.props;
+    // const { diaries } = this.props;
     return (
       //<Container>
       <Map></Map>

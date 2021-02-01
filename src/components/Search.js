@@ -33,8 +33,6 @@ export default function Search({ panTo }) {
     },
   });
 
-  let addr;
-
   return (
     <Combobox
       onSelect={async (address) => {
